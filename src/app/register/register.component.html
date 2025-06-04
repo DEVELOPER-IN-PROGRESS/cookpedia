@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row align-items-center justify-content-center my-5">
         <div class="col-12 col-md-5">
-            <form action="" class="p-3 rounded-2 shadow-lg ">
+            <form [formGroup] ="registerForm" class="p-3 rounded-2 shadow-lg " (ngSubmit)="register()">
                 <h2 class="fs-2 text-center">
                     <i class="fa-solid fa-kitchen-set me-2">
                     </i>
@@ -9,16 +9,25 @@
                 </h2>
 
                 <div class="mb-3 mt-4">
-                    <input type="text" placeholder="Username" class="form-control">
+                    <input name="username" formControlName="username" type="text" placeholder="Username" class="form-control">
+                    @if(registerForm.get('username')?.errors && registerForm.get('username')?.touched){
+                    <span class="text-danger">* Input values must be alphabets</span>
+                    }
                 </div>
                 <div class="mb-3">
-                    <input type="text" placeholder="Email" class="form-control">
+                    <input name="email" formControlName="email" type="text" placeholder="Email" class="form-control">
+                    @if(registerForm.get('email')?.errors && registerForm.get('email')?.touched){
+                    <span class="text-danger">* Input values must be valid email</span>
+                    }
                 </div>
                 <div class="mb-3">
-                    <input type="text" placeholder="Password" class="form-control">
+                    <input name="password" formControlName="password" type="text" placeholder="Password" class="form-control">
+                    @if(registerForm.get('password')?.errors && registerForm.get('password')?.touched){
+                    <span class="text-danger">* Input values must be alphabets or numbers</span>
+                    }
                 </div>
                 <div class="mb-3 mt-5">
-                    <button class="btn btn-success w-100">Register</button>
+                    <button type="submit" class="btn btn-success w-100">Register</button>
                 </div>
                 <div class="mb-3">
                     <p>Already a  User? <a routerLink="/login" class="text-success">Login</a></p>
