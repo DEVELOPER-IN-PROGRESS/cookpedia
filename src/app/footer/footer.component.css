@@ -1,0 +1,7 @@
+#footerlinks .list-unstyled a{
+    text-decoration: none;
+}
+
+#footerlinks .list-unstyled li{
+    margin-bottom: 10px;
+}
