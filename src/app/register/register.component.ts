@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { ApiService } from '../service/api.service';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-register',
   imports: [RouterLink,ReactiveFormsModule],
@@ -23,14 +24,30 @@ export class RegisterComponent {
   register(){
     // console.log(this.registerForm.value)
     if(this.registerForm.invalid){
-      alert('please fill the form completely')
+      Swal.fire({
+      icon: "info",
+      title: "Oops.. Please fill the form completely.",
+      confirmButtonText: 'OK',
+      // text: "Something went wrong!",
+      // footer: '<a href="#">Why do I have this issue?</a>'
+    });
     }else{
       this.api.registerApi(this.registerForm.value).subscribe({
         next:(result:any) => {
            console.log(result)
+           Swal.fire({
+             icon: 'success',
+             title: 'Aww',
+             text: 'Registration Successful',
+           })
         },
         error: (err:any) => {
           console.log(`${err}`)
+          Swal.fire({
+            title: 'Oops',
+            text:'',
+            icon:'info'
+          })
         }
       }
       )
