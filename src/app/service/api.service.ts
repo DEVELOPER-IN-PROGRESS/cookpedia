@@ -18,4 +18,14 @@ export class ApiService {
   userLoginApi(reqBody:any){
     return this.http.post(`${this.serverUrl}/user-login`,reqBody)
   }
+
+  //api to get all home recipes
+  homeRecipeApi(){
+    return this.http.get(`${this.serverUrl}/home-recipes`)
+  }
+
+  //api to fetch all the recipes
+  allRecipes(){
+    return this.http.get(`${this.serverUrl}/all-recipes`)
+  }
 }

@@ -24,27 +24,24 @@
         </div>
     </div>
     <div class="row text-center mt-4 justify-content-center">
-        <div class="col-md-4 mb-4">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWwNz-YV88e3LFP6iisBcZT-loky1VotV4aQ&s"
-                class="card-img-top" alt="Classic Margherita Pizza" style="max-height: 250px; width: 300px; ">
-            <div class="card-body">
-                <h5 class="card-title" style="font-weight: 500;">Classic Margherita Pizza</h5>
-            </div>
-        </div>
-        <div class="col-md-4 mb-4">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVo0qb5azJVPDwjPf2xQhxH3xlrsQdocU4Iw&s"
-                class="card-img-top" alt="Quinoa Salad with Avocado" style="max-height: 250px; width: 300px; ">
-            <div class="card-body">
-                <h5 class="card-title" style="font-weight: 500;">Quinoa Salad with Avocado</h5>
-            </div>
-        </div>
-        <div class="col-md-4 mb-4">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQoHGgftpONVp-CrYJiIQbzcSyobzmEH5JEuQ&s"
-                class="card-img-top" alt="Tomato Basil Bruschetta" style="height: 250px; width: 300px; ">
-            <div class="card-body">
-                <h5 class="card-title" style="font-weight: 500;">Tomato Basil Bruschetta</h5>
-            </div>
-        </div>
+
+
+        @if(HomeRecipe.length > 0){
+            @for(item of HomeRecipe;track $index){
+                <div class="col-md-4 mb-4 p-5">
+                    <img  [src]="item.image"
+                        class="card-img-top" alt="Classic Margherita Pizza" style="max-height: 250px; width: 300px; ">
+                    <div class="card-body">
+                        <h5 class="card-title" style="font-weight: 500;">{{ item.name }}</h5>
+                    </div>
+                </div>
+            }
+
+        }@else{
+            <p class="text-danger">No items to show</p>
+        }
+
+
     </div>
 </div>
 
