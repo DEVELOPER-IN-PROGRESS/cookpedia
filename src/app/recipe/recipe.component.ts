@@ -5,10 +5,11 @@ import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SearchPipe } from '../pipes/search.pipe';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-recipe',
-  imports: [HeaderComponent,DatePipe,FormsModule,SearchPipe,NgxPaginationModule],
+  imports: [HeaderComponent,DatePipe,FormsModule,SearchPipe,NgxPaginationModule,RouterLink],
   templateUrl: './recipe.component.html',
   styleUrl: './recipe.component.css'
 })

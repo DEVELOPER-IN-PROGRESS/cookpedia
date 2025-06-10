@@ -54,10 +54,11 @@
             <div class="row my-5">
                 @if(AllRecipes.length>0){
                     @for(item of AllRecipes
-                    | search: searchKey | paginate: { items_per_page:6 , currentPage: p }
+                    | search: searchKey | paginate: { itemsPerPage:6 , currentPage: p }
                     ;track $index){
                         <div class="col-md-4 p-3">
                             <img [src]="item.image"
+                              routerLink="/view/{{ item._id }}"
                                 alt="no image" class="w-100 rounded">
                             <h4 class="mt-2">{{ item.name }}</h4>
                             <p>cuisne: {{ item.cuisine }} </p>
