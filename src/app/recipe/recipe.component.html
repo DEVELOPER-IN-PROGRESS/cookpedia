@@ -1,50 +1,61 @@
 <app-header></app-header>
 <div class="container mt-5 mb-5">
+    <h5> {{ time | date:'fullDate' }}</h5>
+
     <div class="row">
         <div class="col-md-4">
             <h4 class="mt-5">Filter</h4>
             <div class="mt-4">
-                <button class="btn ">All</button>
-                <div class="dropdown mt-5">
-                    <button class="btn  dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Cuisine
+                <button
+                     data-bs-toggle="collapse"
+                     role="button" aria-expanded="false"
+                     (click)="viewallMeals()" class="btn ">
+                     All
+                </button>
+
+                <div class="dropdown mt-3">
+
+                    <button class="btn" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                         Cuisine
                     </button>
-                    <div class="dropdown-menu border-0">
-                         <div class="d-flex flex-column">
-                            @if(cuisineTypes.length>0){
-                                @for(item of cuisineTypes; track $index) {
+                    <br/>
 
-                                        <button class="btn">{{ item }}</button>
-
-                                }
+                    <div class="collapse mt-2" id="collapseExample">
+                        @if(cuisineTypes.length>0){
+                            @for(item of cuisineTypes; track $index) {
+                                <button (click)="filterCuisine(item)" class="btn text-red-500">{{ item }}</button>
                             }
-                        </div>
+                        }
                     </div>
+
                 </div>
-                <div class="dropdown mt-5">
-                    <button class="btn  dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        MealType
+                <div class="dropdown mt-3">
+
+                    <button class="btn" data-bs-toggle="collapse" href="#collapse2" role="button" aria-expanded="false" aria-controls="collapse2">
+                         MealType
                     </button>
-                     <div class="dropdown-menu border-0">
-                        <div class="d-flex flex-column">
-                            @if(allMealTypes.length>0){
-                                @for(item of allMealTypes; track $index) {
-                                    <button class="btn">{{ item }}</button>
-                                }
+
+                    <div class="collapse mt-2" id="collapse2">
+                        @if(allMealTypes.length>0){
+                            @for(item of allMealTypes; track $index) {
+                                <button  (click)="filterMeals(item)" class="btn">{{ item }}</button>
                             }
-                        </div>
+                        }
                     </div>
+
                 </div>
             </div>
         </div>
         <div class="col-md-8">
             <div class="d-flex justify-content-between">
                 <h1>All Recipes</h1>
-                <input type="text" placeholder="search recipes Here!" class="form-control w-50">
+                <input type="text" [(ngModel)]="searchKey" placeholder="Search Recipes here" class="form-control w-50"/>
             </div>
             <div class="row my-5">
                 @if(AllRecipes.length>0){
-                    @for(item of AllRecipes;track $index){
+                    @for(item of AllRecipes
+                    | search: searchKey | paginate: { items_per_page:6 , currentPage: p }
+                    ;track $index){
                         <div class="col-md-4 p-3">
                             <img [src]="item.image"
                                 alt="no image" class="w-100 rounded">
@@ -56,6 +67,10 @@
                     <p class="text-danger">No recipes to show now</p>
                 }
 
+            </div>
+
+            <div class="d-flex align-items-center justify-content-between">
+                <pagination-controls (pageChange)="p=$event"></pagination-controls>
             </div>
         </div>
     </div>
