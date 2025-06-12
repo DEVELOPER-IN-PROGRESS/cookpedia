@@ -41,7 +41,7 @@ export class LoginComponent {
             })
 
             sessionStorage.setItem('user',JSON.stringify(result.existingUser))
-            sessionStorage.setItem('token',JSON.stringify(result.token))
+            sessionStorage.setItem('token',result.token)
             this.router.navigateByUrl('/')
         },
         error: (err:any) =>{

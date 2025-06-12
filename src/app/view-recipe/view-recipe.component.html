@@ -1,78 +1,88 @@
-<app-header />
+<app-header></app-header>
 <div class="container p-5">
     <div class="row">
         <div class="col-md-6">
             <a routerLink="/all-recipes">Back to all Recipes</a>
             <img class="mt-5 w-100"
-                src="https://bevvyco.s3.amazonaws.com/img/drinks/ep/uep/mojito-d61ce9105464b9c7598c3ca312edae8c-lg.jpg"
+                [src]="recipeDetails.image"
                 alt="no img">
             <div class="d-flex justify-content-between align-items-center mt-4">
-                <button class="btn btn-success text-light">Download Recipe</button>
-                <button class="btn btn-primary text-light">Save Recipe</button>
+                <button type="button" (click)="addDownloadRecipe()" class="btn btn-success text-light">Download Recipe</button>
+                <button type="button" (click)="addSaveRecipe()" class="btn btn-primary text-light">Save Recipe</button>
             </div>
         </div>
 
         <div class="col-md-6 ">
-            <h1>Brazilian Caipirinha</h1>
+            <h1>{{ recipeDetails.name }}</h1>
             <div class="d-flex justify-content-around align-items-center mt-5">
-                <h6>Cuisine:Brazilian</h6>
-                <h6>Serving:1</h6>
-                <h6>Mode of cooking:Easy</h6>
+                <h6>Cuisine: {{ recipeDetails.cuisine }}</h6>
+                <h6>Serving: {{ recipeDetails.servings }} </h6>
+                <h6>Mode of cooking: {{ recipeDetails.difficulty }}</h6>
             </div>
 
             <div class="d-flex justify-content-evenly align-items-center my-3">
                 <div class="d-flex flex-column align-items-center justify-content-center">
                     <h2><i class="fa-solid fa-clock-rotate-left"></i></h2>
-                    <p>Preperation Time:</p>
+                    <p>Preperation Time: {{ recipeDetails.prepTimeMinutes }}</p>
                     <h5><span class="text-danger">5</span> minutes</h5>
                 </div>
 
                 <div class="d-flex flex-column align-items-center justify-content-center">
                     <h2><i class="fa-solid fa-bowl-rice"></i></h2>
                     <p>Cooking Time:</p>
-                    <h5><span class="text-danger">0</span> minutes</h5>
+                    <h5><span class="text-danger"> {{ recipeDetails.cookTimeMinutes }} </span> minutes</h5>
                 </div>
 
                 <div class="d-flex flex-column align-items-center justify-content-center">
                     <h2><i class="fa-solid fa-utensils"></i></h2>
                     <p>Calories per Serving:</p>
-                    <h5><span class="text-danger">150</span> minutes</h5>
+                    <h5><span class="text-danger"> {{ recipeDetails.caloriesPerServing }} </span> Kcal</h5>
                 </div>
             </div>
 
             <div class="mb-5 mt-5">
                 <h2>Ingredients Needed</h2>
                 <ol>
-                    <li>Cachaca(Brazilian sugarcane spiril)</li>
-                    <li>Lime, cut into wedges</li>
-                    <li>Granulated sugar</li>
-                    <li>Ice cubes</li>
+                    @if(ingredients.length){
+                        @for(item of ingredients;track $index){
+                            <li>{{ item }}</li>
+                        }
+                   }@else{
+                     <p>Loading..</p>
+                   }
                 </ol>
             </div>
 
             <div>
                 <h2>Cooking Instruction</h2>
-                <ul>
-                    <li>In a glass muddle lime wedges with granulated sugar to release the juice</li>
-                    <li>Fill the glass with ice cubes</li>
-                    <li>Pour cachaca over the ice and stir well</li>
-                    <li>sip and enjoy the refreshing taste of the Brazilian caripirinha!</li>
-                    <li>Adjust sugar and lime to suit your taste preference</li>
-                </ul>
+                <ol>
+                    @for(item of instructions;track $index){
+                        <li>{{ item }}</li>
+                    }
+                </ol>
             </div>
 
         </div>
     </div>
     <div class="container mt-5">
-        <div class="col-md-6">
-            <h1>Related Recipe</h1>
-            <div class="mt-2 d-flex mt-3">
-                <div class="w-100">
+        <div class="row " >
+            <!-- col-md-6 -->
+            <h4>Related Recipe</h4>
+            @for(item of allRelatedRecipes; track $index){
+                <div class="col-md-6">
+                    <div class="w-100">
                     <img class="w-100 "
-                        src="https://bakerbynature.com/wp-content/uploads/2014/07/blueberry-power-smoothie-97.jpg"
-                        alt="no img" style="height: 300px;">
-                    <p>Blueberry banana smoothy</p>
+                        [src]="allRelatedRecipes.image"
+                        [alt]="allRelatedRecipes.name" style="height: 300px;">
+                        <p>{{ allRelatedRecipes.name }}</p>
+                    </div>
                 </div>
+            }
+        @if(allRelatedRecipes.length ==1){
+
+        }
+        <!-- <div class="mt-2 d-flex mt-3">
+
                 <div class="ms-3 w-100">
                     <img class="w-100 "
                         src="https://thegreencreator.com/wp-content/uploads/VEGAN-Mango-Lassi-Smoothie-5-ingredients-delicious-easy-mango-smoothie-plantbased-glutenfree-recipe-thegreencreator-1.jpg"
@@ -81,9 +91,9 @@
                 </div>
 
                 <img src="" alt="">
-            </div>
+            </div> -->
         </div>
         <div class="col-md-6"></div>
 
-    </div>
+    </div>
 </div>

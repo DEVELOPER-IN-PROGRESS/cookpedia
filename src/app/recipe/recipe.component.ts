@@ -5,7 +5,8 @@ import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SearchPipe } from '../pipes/search.pipe';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-recipe',
@@ -14,7 +15,7 @@ import { RouterLink } from '@angular/router';
   styleUrl: './recipe.component.css'
 })
 export class RecipeComponent {
-  constructor(private api:ApiService){
+  constructor(private api:ApiService,private router:Router){
   }
 
   p:number = 1
@@ -71,5 +72,18 @@ export class RecipeComponent {
 
   viewallMeals(){
     this.AllRecipes = this.dummyArray;
+  }
+
+  viewRecipe(id:string){
+     const token = sessionStorage.getItem('token');
+     if(token){
+      this.router.navigateByUrl(`/view/${id}`)
+     }else{
+      Swal.fire({
+        icon:'info',
+        title:'',
+      })
+      this.router.navigateByUrl('/login')
+     }
   }
 }

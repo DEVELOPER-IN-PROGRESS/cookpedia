@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
+import { HttpHeaderResponse, HttpHeaders } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
@@ -27,5 +27,35 @@ export class ApiService {
   //api to fetch all the recipes
   allRecipes(){
     return this.http.get(`${this.serverUrl}/all-recipes`)
+  }
+
+  appendToken(){
+    let headers = new HttpHeaders();
+    const token = sessionStorage.getItem('token')
+    console.log(token)
+
+    if(token){
+      headers = headers.append('Authorization',`Bearer ${token}`)
+    }
+    return {headers};
+  }
+
+  //api to view a recipe
+  viewRecipeApi(id:string){
+    return this.http.get(`${this.serverUrl}/view/${id}`,this.appendToken())
+  }
+
+  //api to view related recipes
+   relatedRecipesApi(cuisine:any){
+    return this.http.get(`${this.serverUrl}/related-recipes?cuisine=${cuisine}`, this.appendToken() )
+   }
+
+   //add - save recipe
+   addSaveRecipesApi(recipeid:any,reqBody:any){
+    return this.http.post(`${this.serverUrl}/save-recipe/${recipeid}`,reqBody, this.appendToken())
+   }
+
+  downloadRecipeApi(recipeId:any,reqBody:any){
+    return this.http.post(`${this.serverUrl}/download-recipe/${recipeId}`,reqBody,this.appendToken())
   }
 }

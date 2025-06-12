@@ -12,7 +12,7 @@ export const routes: Routes = [
     { path:'',component:HomeComponent },
     { path:'register',component:RegisterComponent },
     { path:'login',component:LoginComponent },
-    { path:'all-recipe',component:RecipeComponent },
+    { path:'all-recipes',component:RecipeComponent },
     { path:'about',component:AboutComponent },
     { path:'contact',component:ContactComponent },
     { path:'view/:id',component:ViewRecipeComponent },
