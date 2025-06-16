@@ -36,6 +36,13 @@
             <li><a class="dropdown-item" routerLink="/login">Login</a></li>
             <li><a class="dropdown-item" routerLink="/register">Register</a></li>
           }
+           @if(isLogged){
+            <li><a class="dropdown-item" routerLink="/profile">Profile</a></li>
+            <li><a class="dropdown-item" routerLink="/saved-recipes">Saved Recipe</a></li>
+            <li (click)="userLogout()">
+              <a class="dropdown-item">Logout</a>
+            </li>
+          }
         </ul>
      </div>
     </div>

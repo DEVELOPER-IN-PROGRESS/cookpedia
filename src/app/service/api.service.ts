@@ -58,4 +58,19 @@ export class ApiService {
   downloadRecipeApi(recipeId:any,reqBody:any){
     return this.http.post(`${this.serverUrl}/download-recipe/${recipeId}`,reqBody,this.appendToken())
   }
+
+  // api to get all the saved user recipes
+  getAllUSerSavedRecipesApi(){
+    return this.http.get(`${this.serverUrl}/saved-user-recipes`,this.appendToken());
+  }
+
+  //api to delete a single saved recipe
+  deleteUserSavedRecipeApi(id:any){
+    return this.http.delete(`${this.serverUrl}/delete-saved-recipe/${id}`)
+  }
+
+  // get all the downloaded recipes list
+  getAllUserDownloadedRecipesApi(){
+    return this.http.get(`${this.serverUrl}/downloaded-user-recipes`,this.appendToken());
+  }
 }

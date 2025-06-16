@@ -89,7 +89,7 @@ export class ViewRecipeComponent {
 
   addDownloadRecipe(){
     this.generatePdf();
-    /*
+
     this.api.downloadRecipeApi(this.recipeDetails._id,this.recipeDetails).subscribe({
       next:(res:any)=>{
          console.log(res);
@@ -100,6 +100,7 @@ export class ViewRecipeComponent {
          })
       },
       error:(err:any)=>{
+        console.log(err)
         Swal.fire({
            title:'Oops',
            text:'Download Failed',
@@ -107,7 +108,7 @@ export class ViewRecipeComponent {
          })
       }
     })
-    */
+
   }
   generatePdf(){
     const pdf = new jsPDF()
