@@ -87,4 +87,8 @@ export class ApiService {
   getAllDownloads(){
     return this.http.get(`${this.serverUrl}/all-downloads`)
   }
+
+  getAllRecipesApi(){
+    return 
+  }
 }
