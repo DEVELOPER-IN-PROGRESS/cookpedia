@@ -73,4 +73,9 @@ export class ApiService {
   getAllUserDownloadedRecipesApi(){
     return this.http.get(`${this.serverUrl}/downloaded-user-recipes`,this.appendToken());
   }
+
+  //api to update the profile
+  updateProfileApi(reqBody:any){
+    return this.http.put(`${this.serverUrl}/profile-update`,reqBody,this.appendToken())
+  }
 }

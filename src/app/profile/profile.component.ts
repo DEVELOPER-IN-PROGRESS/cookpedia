@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { HeaderComponent } from '../header/header.component';
 import { ApiService } from '../service/api.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-profile',
@@ -12,10 +13,16 @@ export class ProfileComponent {
 
   uploadedImage:string = ''
   downloadedRecipes:any[] = [];
+  user:any = {};
+  uploadStatus:any = ''
   constructor(private api:ApiService){}
 
   ngOnInit(){
     this.getAllDownloadedRecipes();
+    this.user  = JSON.parse(sessionStorage.getItem("user") || "")
+    if(this.user.profile){
+      this.uploadedImage = this.user.profile;
+    }
   }
 
   getAllDownloadedRecipes(){
@@ -30,7 +37,6 @@ export class ProfileComponent {
     })
   }
 
-
   getFile(e:any){
     console.log(e.target.files[0])
 
@@ -41,6 +47,42 @@ export class ProfileComponent {
     fr.onload = (event:any)=> { //to get the url
       console.log(event.target.result);
       this.uploadedImage = event.target.result;
+      this.uploadStatus = this.uploadedImage;
+    }
+  }
+
+  upload(){
+    if(this.uploadStatus){
+      this.api.updateProfileApi({
+        profileImage:this.uploadedImage,
+      }).subscribe({
+        next:(res:any)=>{
+          console.log(res);
+          this.uploadedImage = res;
+          console.log(res);
+          sessionStorage.setItem("user",JSON.stringify(res))
+          this.uploadStatus = ""
+          Swal.fire({
+            title:"Aww",
+            text: "Profile Updation Successful",
+            icon: "success"
+          })
+        },
+        error:(err:any)=>{
+          console.log(err)
+          Swal.fire({
+            title:'Oops',
+            text: 'Something went wrong',
+            icon: 'error'
+          })
+        }
+      })
+    }else{
+      Swal.fire({
+        title:'Oops',
+        text: 'Please upload a profile Image',
+        icon: 'error'
+      })
     }
   }
 }
