@@ -23,25 +23,31 @@
             </div>
 
             <div class="table-responsive px-4 my-5">
-                <table class="table table-bordered">
+                @if(allUsers.length){
+                    <table class="table table-bordered">
                     <thead>
-                        <th class="bg-success">Sl</th>
-                        <th class="bg-success">Name</th>
+                        <th class="bg-success">Sl: No</th>
+                        <th class="bg-success">UserName</th>
                         <th class="bg-success">Email</th>
 
                     </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>dummy</td>
-                        <td>
-                            <img src="" alt="no image" class="p" />
-                        </td>
-                    </tr>
-                </tbody>
-                </table>
-
-                <h3 class="text-danger fs-3">No Users...</h3>
+                    <tbody>
+                        @for(user of allUsers; track $index){
+                         @if(user.role =="user"){
+                            <tr>
+                                <td>{{ $index+1 }}</td>
+                                <td>{{ user.username }}</td>
+                                <td>
+                                    {{ user.email }}
+                                </td>
+                            </tr>
+                            }
+                        }
+                    </tbody>
+                    </table>
+                }@else{
+                    <h3 class="text-danger fs-3">No Users...</h3>
+                }
             </div>
 
         </div>

@@ -22,8 +22,8 @@ export class RecipeComponent {
   time:Date = new Date()
   searchKey:string = ''
   cuisineTypes:any = []
-  AllRecipes:any = []
   allMealTypes:any  = []
+  AllRecipes:any = []
   dummyArray:any = []
 
   ngOnInit(){

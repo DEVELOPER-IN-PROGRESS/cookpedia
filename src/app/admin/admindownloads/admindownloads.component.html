@@ -23,26 +23,31 @@
             </div>
 
             <div class="table-responsive px-4 my-5">
-                <table class="table table-bordered">
-                    <thead>
-                        <th class="bg-success text-light">Sl</th>
-                        <th class="bg-success text-light">Recipe Id</th>
-                        <th class="bg-success text-light">Recipe Name</th>
-                        <th class="bg-success text-light">Recipe Cuisine</th>
-                        <th class="bg-success text-light">Count</th>
-                    </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>dummy</td>
-                        <td>dummy</td>
-                        <td>dummy</td>
-                        <td>dummy</td>
-                    </tr>
-                </tbody>
-                </table>
+                @if(allDownloads.length){
+                    <table class="table table-bordered">
+                        <thead>
+                            <th class="bg-success text-light px-2">Sl</th>
+                            <th class="bg-success text-light px-2">Recipe Id</th>
+                            <th class="bg-success text-light px-2">Recipe Name</th>
+                            <th class="bg-success text-light px-2">Recipe Cuisine</th>
+                            <th class="bg-success text-light px-2">Count</th>
+                        </thead>
+                    <tbody>
+                        @for(item of allDownloads;track $index){
+                            <tr>
+                                <td>{{ $index+1 }} </td>
+                                <td class="text-warning"> {{ item.recipeId }}</td>
+                                <td> {{ item.name }}</td>
+                                <td> {{ item.cuisine }}</td>
+                                <td> {{ item.count }}</td>
+                            </tr>
+                        }
 
-                <h3 class="text-danger fs-3">No Downloads...</h3>
+                    </tbody>
+                    </table>
+                }@else{
+                    <h3 class="text-danger fs-3">No Downloads...</h3>
+                }
             </div>
 
         </div>

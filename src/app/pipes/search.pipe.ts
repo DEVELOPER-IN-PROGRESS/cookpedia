@@ -7,12 +7,16 @@ export class SearchPipe implements PipeTransform {
 
   transform(allRecipes:any[], searchKey:string): any[] {
     let result:any = [];
-
-    if(!allRecipes || searchKey){
+    console.log(searchKey);
+    if(!allRecipes || searchKey==""){
       return allRecipes;
     }
     result = allRecipes.filter( (item:any) =>
-       item.name.toLowerCase().includes(searchKey.toLowerCase()))
+      //  console.log(item.name)
+       item.name.toLowerCase().includes(searchKey.toLowerCase())
+      )
+
+    console.log(result);
     return result;
   }
 
