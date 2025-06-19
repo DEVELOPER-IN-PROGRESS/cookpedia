@@ -63,7 +63,7 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="adminRecipe" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade " id="adminRecipe" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header bg-success">
@@ -71,14 +71,53 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
+
+        <div class="row justify-content-center">
+            <div class="row justify-content-between">
+                <div class="col-6 px-0">
+                    <div class="mb-3">
+                        <input  type="text" placeholder="Name of the recipe" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-6 px-0">
+                    <div class="mb-3">
+                        <input  type="text" placeholder="Servings" class="form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-between">
+                <div class="col-6 px-0 ">
+                    <div class="mb-3">
+                        <input  type="text" placeholder="Preparation Time" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-6 px-0">
+                    <div class="mb-3">
+                        <input  type="text" placeholder="Cooking Time" class="form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-between">
+                <div class="col-6 px-0">
+                    <div class="mb-3">
+                        <input  type="text" placeholder="Calories" class="form-control" />
+                    </div>
+
+                </div>
+                <div class="col-6 px-0">
+                    <div class="mb-3">
+                        <input  type="text" placeholder="Ratings" class="form-control" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--
         <div class="mb-3">
             <input  type="text" placeholder="Name of the recipe" class="form-control" />
         </div>
         <div class="mb-3">
-            <input  type="text" placeholder="Ingredients" class="form-control" />
-        </div>
-        <div class="mb-3">
-            <input  type="text" placeholder="Instructions" class="form-control" />
+            <input  type="text" placeholder="Servings" class="form-control" />
         </div>
         <div class="mb-3">
             <input  type="text" placeholder="Preparation Time" class="form-control" />
@@ -86,9 +125,23 @@
         <div class="mb-3">
             <input  type="text" placeholder="Cooking Time" class="form-control" />
         </div>
-        <div class="mb-3">
-            <input  type="text" placeholder="Servings" class="form-control" />
+         <div class="mb-3">
+            <input  type="text" placeholder="Calories" class="form-control" />
         </div>
+        <div class="mb-3">
+            <input  type="text" placeholder="Ratings" class="form-control" />
+        </div>
+
+
+        <div class="mb-3">
+            <input  type="text" placeholder="Ingredients" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <input  type="text" placeholder="Instructions" class="form-control" />
+        </div>
+
+          -->
+
         <div class="mb-3">
             <select name="" id="" class="form-select">
                 <option [defaultSelected]="true" value="">Mode of Cooking</option>
@@ -98,6 +151,18 @@
             </select>
         </div>
         <div class="mb-3">
+            @if(allMealTypes.length){
+            <ng-multiselect-dropdown
+            [placeholder]="'Meal Types'"
+            [settings]="dropdownSettings"
+            [data]="dropdownList"
+            [(ngModel)]="selectedItems"
+            (onSelect)="onItemSelect($event)"
+            (onSelectAll)="onSelectAll($event)"
+            >
+            </ng-multiselect-dropdown>
+            }
+
              <select name="" id="" class="form-select">
                 <option [defaultSelected]="true" value="" disabled>Cuisine Type</option>
                 @for( cuisine of cuisineTypes ;track $index){
@@ -105,12 +170,7 @@
                 }
             </select>
         </div>
-        <div class="mb-3">
-            <input  type="text" placeholder="Calories" class="form-control" />
-        </div>
-        <div class="mb-3">
-            <input  type="text" placeholder="Ratings" class="form-control" />
-        </div>
+
         <div class="mb-3">
             <select name="" id="" class="form-select">
                 <option [defaultSelected]="true" value="" disabled>Meal Type</option>

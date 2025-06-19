@@ -22,12 +22,20 @@ export class AdminhomeComponent {
 
   bootSequence(){
     this.api.getAllDownloads().subscribe({
-      next:(res:any)=> { this.downloadCount = res.length},
+      next:(res:any)=> {
+        console.log(res)
+        let count = res.map((item:any) => item.count )
+        console.log(count)
+         this.downloadCount = res.map((item:any) => item.count)
+        .reduce( (n1:any,n2:any) => n1+n2  )
+       },
       error:(err:any) => console.log(err)
     })
 
     this.api.getAllUsersApi().subscribe({
-      next:(res:any)=> { this.userCount = res.length},
+      next:(res:any)=> {
+        this.userCount = res.filter((user:any) => user.role!="admin").length;
+      },
       error:(err:any) => console.log(err)
     })
 
