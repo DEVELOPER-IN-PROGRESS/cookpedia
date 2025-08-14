@@ -42,10 +42,10 @@
                                 </td>
                                 <td>{{ item.cuisine }} </td>
                                 <td>
-                                    <button class="btn btn-outline-primary">
+                                    <button type="button"  class="btn btn-outline-primary">
                                         <i class="fa-solid fa-pen-square"></i>
                                     </button>
-                                    <button class="btn btn-outline-danger ms-4">
+                                    <button type="button" (click)="deleteReceipe(item._id)"  class="btn btn-outline-danger ms-4">
                                         <i class="fa-solid fa-trash-can"></i>
                                     </button>
                                 </td>
@@ -72,78 +72,48 @@
       </div>
       <div class="modal-body">
 
-        <div class="row justify-content-center">
-            <div class="row justify-content-between">
-                <div class="col-6 px-0">
-                    <div class="mb-3">
-                        <input  type="text" placeholder="Name of the recipe" class="form-control" />
+        <form [formGroup]="recipeForm">
+            <div class="row justify-content-center">
+                <div class="row justify-content-between">
+                    <div class="col-6 px-0">
+                        <div class="mb-3">
+                            <input  type="text" name="recipeName" formControlName="recipeName" placeholder="Name of the recipe" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-6 px-0">
+                        <div class="mb-3">
+                            <input  type="text" name="servings" formControlName="servings" placeholder="Servings" class="form-control" />
+                        </div>
                     </div>
                 </div>
-                <div class="col-6 px-0">
-                    <div class="mb-3">
-                        <input  type="text" placeholder="Servings" class="form-control" />
+                <div class="row justify-content-between">
+                    <div class="col-6 px-0 ">
+                        <div class="mb-3">
+                            <input  type="text" name="prepTime" formControlName="prepTime" placeholder="Preparation Time" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-6 px-0">
+                        <div class="mb-3">
+                            <input  type="text" name="cookingTime" formControlName="cookingTime" placeholder="Cooking Time" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-between">
+                    <div class="col-6 px-0">
+                        <div class="mb-3">
+                            <input  type="text" name="calories" formControlName="calories" placeholder="Calories" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-6 px-0">
+                        <div class="mb-3">
+                            <input  type="text" name="rating" formControlName="rating" placeholder="Ratings" class="form-control" />
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="row justify-content-between">
-                <div class="col-6 px-0 ">
-                    <div class="mb-3">
-                        <input  type="text" placeholder="Preparation Time" class="form-control" />
-                    </div>
-                </div>
-                <div class="col-6 px-0">
-                    <div class="mb-3">
-                        <input  type="text" placeholder="Cooking Time" class="form-control" />
-                    </div>
-                </div>
-            </div>
-            <div class="row justify-content-between">
-                <div class="col-6 px-0">
-                    <div class="mb-3">
-                        <input  type="text" placeholder="Calories" class="form-control" />
-                    </div>
-
-                </div>
-                <div class="col-6 px-0">
-                    <div class="mb-3">
-                        <input  type="text" placeholder="Ratings" class="form-control" />
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!--
-        <div class="mb-3">
-            <input  type="text" placeholder="Name of the recipe" class="form-control" />
-        </div>
-        <div class="mb-3">
-            <input  type="text" placeholder="Servings" class="form-control" />
-        </div>
-        <div class="mb-3">
-            <input  type="text" placeholder="Preparation Time" class="form-control" />
-        </div>
-        <div class="mb-3">
-            <input  type="text" placeholder="Cooking Time" class="form-control" />
-        </div>
-         <div class="mb-3">
-            <input  type="text" placeholder="Calories" class="form-control" />
-        </div>
-        <div class="mb-3">
-            <input  type="text" placeholder="Ratings" class="form-control" />
-        </div>
-
 
         <div class="mb-3">
-            <input  type="text" placeholder="Ingredients" class="form-control" />
-        </div>
-        <div class="mb-3">
-            <input  type="text" placeholder="Instructions" class="form-control" />
-        </div>
-
-          -->
-
-        <div class="mb-3">
-            <select name="" id="" class="form-select">
+            <select name="modeofCooking" formControlName="modeofCooking" id="" class="form-select">
                 <option [defaultSelected]="true" value="">Mode of Cooking</option>
                 <option value="easy">Easy</option>
                 <option value="medium">Medium</option>
@@ -156,14 +126,15 @@
             [placeholder]="'Meal Types'"
             [settings]="dropdownSettings"
             [data]="dropdownList"
-            [(ngModel)]="selectedItems"
             (onSelect)="onItemSelect($event)"
             (onSelectAll)="onSelectAll($event)"
             >
             </ng-multiselect-dropdown>
             }
+        </div>
 
-             <select name="" id="" class="form-select">
+        <div class="mb-3">
+             <select name="cuisineType" formControlName="cuisineType" id="" class="form-select">
                 <option [defaultSelected]="true" value="" disabled>Cuisine Type</option>
                 @for( cuisine of cuisineTypes ;track $index){
                     <option [value]="cuisine">{{ cuisine }}</option>
@@ -171,21 +142,26 @@
             </select>
         </div>
 
-        <div class="mb-3">
-            <select name="" id="" class="form-select">
-                <option [defaultSelected]="true" value="" disabled>Meal Type</option>
-                @for( meal of allMealTypes ;track $index){
-                    <option [value]="meal">{{ meal }}</option>
-                }
-            </select>
+        <div class="mb-3 d-flex">
+            <input  type="text" #ingredient class="form-control rounded-0" placeholder="Add Ingredient" />
+            <button type="button" (click)="addIngredient(ingredient)" class="btn btn-success rounded-0">Add</button>
         </div>
-        <div class="mb-3">
-            <input  type="file" placeholder="Recipe Image" class="form-control" />
+
+        <div class="mb-3 d-flex">
+            <input  type="text" #instruction class="form-control rounded-0" placeholder="Add instructions" />
+            <button type="button" (click)="addInstruction(instruction)" class="btn btn-success rounded-0">Add</button>
         </div>
+
+        <div class="mb-0">
+            <label for="recipeImage">Upload Image</label>
+            <input name="image" formControlName="image"  type="file" (change)="getFile($event)" id="recipeImage" placeholder="Recipe Image" class="form-control" />
+        </div>
+
+        </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Reset</button>
-        <button type="button" class="btn btn-primary">Save</button>
+        <button type="button" (click)="save()" class="btn btn-primary">Save</button>
       </div>
     </div>
   </div>

@@ -88,7 +88,20 @@ export class ApiService {
     return this.http.get(`${this.serverUrl}/all-downloads`)
   }
 
-  getAllRecipesApi(){
-    return 
+  addNewRecipeApi(reqBody:any){
+    return this.http.post(`${this.serverUrl}/add-recipe`,reqBody)
+  }
+
+  addNewTestimonialApi(reqBody:any){
+    return this.http.post(`${this.serverUrl}/add-testimonial`,reqBody);
+  }
+
+  //api to get all the testimonials
+  getAllTestimonialsApi(){
+    return this.http.get(`${this.serverUrl}/all-testimonials`)
+  }
+
+  updateTestimonialStatusApi(id:any,reqBody:any){
+    return this.http.put(`${this.serverUrl}/update-testimonial/${id}`,reqBody);
   }
 }

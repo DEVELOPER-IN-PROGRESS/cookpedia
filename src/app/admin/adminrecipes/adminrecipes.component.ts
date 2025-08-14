@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ComponentFactoryResolver } from '@angular/core';
 import { AdminheaderComponent } from '../adminheader/adminheader.component';
 import { AdminsidebarComponent } from '../adminsidebar/adminsidebar.component';
 import { ApiService } from '../../service/api.service';
@@ -7,6 +7,7 @@ import { SearchPipe } from '../../pipes/search.pipe';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import {  OnInit } from '@angular/core';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-adminrecipes',
@@ -33,25 +34,28 @@ export class AdminrecipesComponent {
         recipeName: ["",[Validators.required,Validators.pattern('[a-zA-Z]*')]],
         prepTime: ["",[Validators.required,Validators.pattern('[0-9]*')]],
         calories: ["",[Validators.required,Validators.pattern('[0-9]*')]],
-        serving: ["",[Validators.required,Validators.pattern('[0-9]*')]],
+        servings: ["",[Validators.required,Validators.pattern('[0-9]*')]],
         cookingTime: ["",[Validators.required,Validators.pattern('[0-9]*')]],
         rating: ["",[Validators.required,Validators.pattern('[0-9]*')]],
         modeofCooking: ["",[Validators.required,Validators.pattern('[a-zA-Z]*')]],
-        mealType: ["",[Validators.required]],
+        mealType: [[],[Validators.required]],
         cuisineType: ["",[Validators.required]],
-        ingredients: ["",[Validators.required]],
-        instructions: ["",[Validators.required]],
+        ingredients: [[],[Validators.required]],
+        instructions: [[],[Validators.required]],
         image: ["",[Validators.required]],
       })
   }
 
  ngOnInit(){
     this.dropdownList = [
-      { item_id: 10, item_text: 'Mumbai' },
-      { item_id: 2, item_text: 'Bangaluru' },
-      // { item_id: 3, item_text: 'Pune' },
-      // { item_id: 4, item_text: 'Navsari' },
-      // { item_id: 5, item_text: 'New Delhi' }
+      { item_id: 1, item_text: 'Dinner'},
+      { item_id: 2, item_text: 'Lunch' },
+      { item_id: 3, item_text: 'Breakfast'},
+      { item_id: 4, item_text: 'Dessert'},
+      { item_id: 5, item_text: 'Side Dish'},
+      { item_id: 6, item_text: 'Appetizer' },
+      { item_id: 7, item_text: 'Snacks' },
+      { item_id: 8, item_text:  'Beverage' },
     ];
 
     this.fetchAllRecipes();
@@ -59,11 +63,7 @@ export class AdminrecipesComponent {
     // this.helper();
 
     this.selectedItems = [
-      // { item_id: 1, item_text: 'lunch' },
-      // { item_id: 2, item_text: 'dinner' }
     ];
-
-
 
     this.dropdownSettings = {
       singleSelection: false,
@@ -81,32 +81,85 @@ export class AdminrecipesComponent {
 
   }
 
-  helper(){
-    // debugger;
-    console.log(this.allMealTypes)
+  save(){
+    console.log('inside save function')
+    console.log(this.recipeForm.value)
+    const { recipeName,prepTime,calories,servings,cookingTime, rating,modeofCooking,mealType,cuisineType,ingredients,instructions,image } = this.recipeForm.value;
+    if( !recipeName || !prepTime || !calories || !servings || !cookingTime || ! rating || !modeofCooking || !mealType || !cuisineType || !ingredients.length || !instructions.length || !image){
+      Swal.fire({
+        title: 'OOps',
+        text: 'Please Fill the complete form',
+        icon: 'info'
+      })
+    }else{
+      this.api.addNewRecipeApi(this.recipeForm.value).subscribe({
+        next:(res:any)=>{
+          console.log(res)
+        },
+        error:(err:any)=>{
+          console.log(err);
+        }
+      })
+    }
+  }
 
-    let filtered:any = [];
-
-    this.allMealTypes.map( (item:any,index:number) => filtered.push({'item_id': index+1, 'item_text':item}) )
-
-    console.log({filtered})
-
-    setTimeout(() => {
-      this.dropdownList = filtered;
-    }, 1000);
-
-
-    // this.dropdownList = this.allMealTypes?.map( (item:any,index:number) =>{
-    //   return {'item_id': index+1, 'item_text':item} } )
-
-    console.log(this.dropdownList)
+  deleteReceipe(id:any){
+    this.api.deleteUserSavedRecipeApi(id).subscribe({
+      next:(res:any)=>{
+        console.log(res)
+        this.fetchAllRecipes();
+      },
+      error:(res:any)=> console.log(res)
+    })
   }
 
   onItemSelect(item: any) {
     console.log(item);
+    console.log(this.recipeForm.value)
+    this.recipeForm.value.mealType.push(item.item_text)
   }
+
   onSelectAll(items: any) {
     console.log(items);
+    items.forEach((item:any) =>{
+      this.recipeForm.value.mealType.push(item.item_text);
+    })
+  }
+
+  onDeleteItem(items:any){
+    console.log(items)
+    this.recipeForm.value.mealType = this.recipeForm.value.mealType
+    .filter((meal:any)=> meal != items.item_text)
+  }
+
+  onDeleteItemall(){
+    this.recipeForm.value.mealType = [];
+  }
+
+  addIngredient(data:any){
+    console.log(data.value)
+    this.recipeForm.value.ingredients.push(data.value)
+    data.value = ''
+  }
+
+  addInstruction(data:any){
+    console.log(data.value)
+
+    console.log( this.recipeForm.value.instructions)
+    this.recipeForm.value.instructions.push(data.value)
+    data.value = ''
+  }
+
+   getFile(e:any){
+    console.log(e.target.files[0])
+
+    //file reader
+    let fr = new FileReader()
+    fr.readAsDataURL(e.target.files[0]) // to read the file and convert to url
+
+    fr.onload = (event:any)=> {
+      this.recipeForm.value.image = event.target.result;
+    }
   }
 
  fetchAllRecipes(){
