@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+]import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HttpHeaderResponse, HttpHeaders } from '@angular/common/http';
 @Injectable({
@@ -7,7 +7,7 @@ import { HttpHeaderResponse, HttpHeaders } from '@angular/common/http';
 export class ApiService {
   constructor(private http:HttpClient) { }
 
-  serverUrl = `http://localhost:4000`;
+  serverUrl = `https://cookpedia-backend-d260.onrender.com`;
 
   //api to register
   registerApi(reqBody:any){
